@@ -1,0 +1,4 @@
+FROM 038405485655.dkr.ecr.us-east-1.amazonaws.com/dotnet-base:6.0
+WORKDIR /app
+COPY /publish/Cron/. .
+ENTRYPOINT [ "dotnet", "/app/FaqChatbot.Cron.dll" ]

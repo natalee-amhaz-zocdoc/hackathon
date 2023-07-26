@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FaqChatbot\FaqChatbot.csproj" />
+    <PackageReference Include="Zocdoc.Core.App" Version="$(ZdCoreVersion)" />
+    <Content Include="Dockerfile.Cron" CopyToPublishDirectory="Always" />
+    <Content Include="appsettings.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" />
+    <Content Include="appsettings.*.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
+  </ItemGroup>
+</Project>

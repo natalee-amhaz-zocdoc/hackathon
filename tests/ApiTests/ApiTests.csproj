@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\FaqChatbot.Web\FaqChatbot.Web.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="FluentAssertions" Version="6.7.0" />
+    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.3.1" />
+    <PackageReference Update="Zocdoc.Core.Tests" Version="$(ZdCoreVersion)" />
+  </ItemGroup>
+</Project>

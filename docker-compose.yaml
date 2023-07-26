@@ -1,0 +1,79 @@
+version: "3.8"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: ./src/FaqChatbot.Web/Dockerfile
+    image: 038405485655.dkr.ecr.us-east-1.amazonaws.com/faq-chatbot:${TAG:-local}
+    container_name: faq-chatbot-web-${TC_BUILD_NUMBER:-local}
+    ports:
+      - "5001:443"
+    expose:
+      - "443"
+    environment:
+      - "DOTNET_ENVIRONMENT=${DOTNET_ENVIRONMENT:-IntegrationTests}"
+    depends_on:
+      localstack:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:80/healthcheck" ]
+
+  fake:
+    build:
+      context: .
+      dockerfile: ./src/FaqChatbot.Fake/Dockerfile.Fake
+      x-bake:
+        platforms:
+          - linux/arm64
+          - linux/amd64
+    image: 038405485655.dkr.ecr.us-east-1.amazonaws.com/faq-chatbot:fake-${TAG:-local}
+    container_name: faq-chatbot-fake-${TC_BUILD_NUMBER:-local}
+    ports:
+      - "5003:443"
+    expose:
+      - "443"
+    environment:
+      - DOTNET_ENVIRONMENT=FakeIntegrationTests
+    healthcheck:
+      test: [ "CMD", "curl", "-k", "-f", "https://localhost:443/healthcheck" ]
+
+  cron:
+    build:
+      context: .
+      dockerfile: ./src/FaqChatbot.Cron/Dockerfile.Cron
+    image: 038405485655.dkr.ecr.us-east-1.amazonaws.com/faq-chatbot:cron-${TAG:-local}
+
+  worker:
+    build:
+      context: .
+      dockerfile: ./src/FaqChatbot.Worker/Dockerfile
+    image: 038405485655.dkr.ecr.us-east-1.amazonaws.com/faq-chatbot:worker-${TAG:-local}
+
+
+  localstack:
+    image: localstack/localstack:1.1.0
+    container_name: faq-chatbot-localstack-${TC_BUILD_NUMBER:-local}
+    environment:
+      - SERVICES=dynamodb,dynamodbstreams,lambda,sns,sqs
+      - DEFAULT_REGION=us-east-1
+      - LAMBDA_EXECUTOR=docker
+    ports:
+      - "4566:4566"
+    expose:
+      - 4566
+    healthcheck:
+      test: ["CMD", "awslocal", "dynamodb", "list-tables"]
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  zipkin:
+    image: openzipkin/zipkin:2
+    ports:
+      - 9411:9411
+    expose:
+      - 9411
+
+networks:
+  default:
+    name: faq-chatbot_default_${TC_BUILD_NUMBER:-local}

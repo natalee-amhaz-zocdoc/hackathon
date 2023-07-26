@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.7.101.18" />
+    <PackageReference Include="Zocdoc.Core.Extensions" Version="$(ZdCoreVersion)" />
+    <PackageReference Include="Zocdoc.Core.Settings" Version="$(ZdCoreVersion)" />
+    <PackageReference Include="Zocdoc.Aws.DynamoDb" Version="$(ZdCoreVersion)" />
+  </ItemGroup>
+</Project>
