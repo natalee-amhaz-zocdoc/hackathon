@@ -1,4 +1,0 @@
-FROM 038405485655.dkr.ecr.us-east-1.amazonaws.com/dotnet-base:6.0
-WORKDIR /app
-COPY /publish/Worker/. .
-ENTRYPOINT [ "dotnet", "/app/FaqChatbot.Worker.dll" ]
