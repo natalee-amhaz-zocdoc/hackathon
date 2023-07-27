@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
+import logo from './logo.svg';
 
 const App = () => {
   const [inputText, setInputText] = useState('');
@@ -23,23 +25,48 @@ const App = () => {
   };
 
   return (
-    <div>
-      <h1>React Python OpenAI Service</h1>
-      <textarea
-        rows={4}
-        cols={50}
-        value={inputText}
-        onChange={handleInputChange}
-        placeholder="Enter your prompt here..."
-      />
-      <br />
-      <button onClick={handleSubmit}>Submit</button>
-      <div>
-        <h2>Response:</h2>
-        <p>{responseText}</p>
-      </div>
-    </div>
+    <Container>
+      <Head>
+        <img src={logo} alt="Zocdoc logo"/>
+        <h1>ZocBot</h1>
+        <textarea
+          rows={10}
+          cols={50}
+          value={inputText}
+          onChange={handleInputChange}
+          placeholder="Enter your prompt here..."
+        />
+        <br />
+        <button onClick={handleSubmit}>Submit</button>
+        <div>
+          <h2>Response:</h2>
+          <p>{responseText}</p>
+        </div>
+      </Head>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  position: relative
+  display: flex;
+  justify content: center;
+  align-items: center;
+  height: 100vh;
+  background-color:  #FEED5A;
+
+`;
+const Head = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+`;
 
 export default App;
