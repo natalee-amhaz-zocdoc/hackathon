@@ -5,22 +5,25 @@ import openai
 app = Flask(__name__)
 CORS(app,  resources={r"/api/*": {"origins": "http://localhost:3000"}})
 
+PATH = "question_data/"
+UNANSWERED_QUESTIONS_FILENAME = "unanswered_questions.txt"
+
 # Initialize OpenAI with your API key
 openai.api_key = "94acf53489374ddaaaeaf59e45edb351"
 
 @app.route('/api/gpt3', methods=['POST'])
 def run_gpt3():
     data = request.json
-    #prompt = data.get('prompt', '')
+    prompt = data.get('prompt', '')
     #response = openai.Completion.create(engine="text-davinci-002", prompt=prompt, max_tokens=150)
-    return jsonify(request)
+    return jsonify(prompt)
 
-def add_question_to_report(filename, text):
+def add_question_to_report(text):
     try:
-        with open(filename, 'a') as file:
+        with open(PATH + UNANSWERED_QUESTIONS_FILENAME, 'a') as file:
             file.write(text + '\n')
     except FileNotFoundError:
-        with open(filename, 'w') as file:
+        with open(PATH + UNANSWERED_QUESTIONS_FILENAME, 'w') as file:
             file.write(text + '\n')
     except Exception as e:
         print(f"Error occurred: {e}")
