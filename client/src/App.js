@@ -15,7 +15,7 @@ const App = () => {
       const response = await axios.post('http://localhost:5000/api/gpt3', { prompt: inputText });
       console.log("test");
       console.log(response);
-      setResponseText(response.data.choices[0].text);
+      setResponseText(response.data);
     } catch (error) {
       console.error('Error:', error);
       setResponseText('An error occurred while processing your request.');
