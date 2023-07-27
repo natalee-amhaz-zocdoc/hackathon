@@ -133,4 +133,22 @@ const StyledButton = styled.button`
   }
 `;
 
+const BlockButton = styled.button`
+  display: block;
+  width: 68%;
+  border: none;
+  background-color: #00234B;
+  color: white;
+  padding: 14px 28px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+
+  &:hover {
+    background-color: #ddd;
+    color: black;
+  }
+`;
+
+
 export default App;
