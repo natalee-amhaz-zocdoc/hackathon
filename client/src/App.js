@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
+import ScrollableFeed from 'react-scrollable-feed';
 import logo from './logo.svg';
 
 const App = () => {
@@ -30,22 +31,24 @@ const App = () => {
 
   return (
     <Container>
-      <ContentContainer>
+      <ContentContainer> 
         <Head>
           <img src={logo} alt="Zocdoc logo" />
           <h1>ZocBot</h1>
         </Head>
         <ChatContainer>
-          {messages.map((message, index) => (
-            <div>
-            <ChatMessage key={index}>
-              <strong>You:</strong> {message.user}
-            </ChatMessage>
-            <ChatMessage key={index + 1}>
-              <strong>ZocBot:</strong> {message.bot}
-            </ChatMessage>
-            </div>
-          ))}
+          <ScrollableFeed>
+            {messages.map((message, index) => (
+              <div>
+              <ChatMessage key={index}>
+                <strong>You:</strong> {message.user}
+              </ChatMessage>
+              <ChatMessage key={index + 1}>
+                <strong>ZocBot:</strong> {message.bot}
+              </ChatMessage>
+              </div>
+            ))}
+          </ScrollableFeed>
         </ChatContainer>
         <StyledTextarea
           rows={4}
